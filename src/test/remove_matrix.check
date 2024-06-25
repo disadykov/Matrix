@@ -1,0 +1,36 @@
+#include <check.h>
+
+#include "../s21_matrix.h"
+
+#test test_remove_matrix1
+matrix_t test;
+s21_create_matrix(1, 1, &test);
+s21_remove_matrix(&test);
+ck_assert_int_eq(test.matrix == NULL, SUCCESS);
+
+#test test_remove_matrix2
+matrix_t test;
+int rows = 123;
+int columns = 321;
+s21_create_matrix(rows, columns, &test);
+s21_remove_matrix(&test);
+ck_assert_int_eq(test.matrix == NULL, SUCCESS);
+ck_assert_int_eq(test.rows == rows, FAILURE);
+ck_assert_int_eq(test.columns == columns, FAILURE);
+
+#test test_remove_matrix3
+matrix_t test = {0};
+double **ptest = test.matrix;
+int rows = 123;
+int columns = 321;
+s21_create_matrix(rows, columns, &test);
+s21_remove_matrix(&test);
+ck_assert_ptr_null(ptest);
+
+#test test_remove_matrix4
+matrix_t test = {0};
+s21_create_matrix(99, 99, &test);
+s21_remove_matrix(&test);
+ck_assert_ptr_null(test.matrix);
+ck_assert_int_eq(test.rows, 0);
+ck_assert_int_eq(test.columns, 0);

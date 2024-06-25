@@ -1,0 +1,160 @@
+#include <check.h>
+
+#include "../s21_matrix.h"
+
+#test test_transpose1
+matrix_t a, b, c;
+s21_create_matrix(3, 2, &a);
+s21_create_matrix(2, 3, &b);
+a.matrix[0][0] = 1;
+a.matrix[0][1] = 4;
+a.matrix[1][0] = 2;
+a.matrix[1][1] = 5;
+a.matrix[2][0] = 3;
+a.matrix[2][1] = 6;
+b.matrix[0][0] = 1;
+b.matrix[0][1] = 2;
+b.matrix[0][2] = 3;
+b.matrix[1][0] = 4;
+b.matrix[1][1] = 5;
+b.matrix[1][2] = 6;
+int ret = s21_transpose(&a, &c);
+ck_assert_int_eq(ret, MATRIX_OK);
+int res = s21_eq_matrix(&c, &b);
+ck_assert_int_eq(res, SUCCESS);
+s21_remove_matrix(&a);
+s21_remove_matrix(&b);
+s21_remove_matrix(&c);
+
+#test test_transpose2
+matrix_t a = {0};
+matrix_t c = {0};
+s21_create_matrix(-1, 0, &a);
+int res = s21_transpose(&a, &c);
+ck_assert_int_eq(res, MATRIX_INCORRECT);
+s21_remove_matrix(&a);
+s21_remove_matrix(&c);
+
+#test test_transpose3
+matrix_t a, b, c;
+s21_create_matrix(2, 3, &a);
+s21_create_matrix(3, 2, &b);
+a.matrix[0][0] = 1;
+a.matrix[0][1] = 2;
+a.matrix[0][2] = 3;
+a.matrix[1][0] = 1;
+a.matrix[1][1] = 2;
+a.matrix[1][2] = 3;
+b.matrix[0][0] = 1;
+b.matrix[0][1] = 1;
+b.matrix[1][0] = 2;
+b.matrix[1][1] = 2;
+b.matrix[2][0] = 3;
+b.matrix[2][1] = 3;
+int ret = s21_transpose(&a, &c);
+ck_assert_int_eq(ret, MATRIX_OK);
+int res = s21_eq_matrix(&c, &b);
+ck_assert_int_eq(res, SUCCESS);
+s21_remove_matrix(&a);
+s21_remove_matrix(&b);
+s21_remove_matrix(&c);
+
+#test test_transpose4
+matrix_t a, b, c;
+s21_create_matrix(2, 3, &a);
+s21_create_matrix(3, 2, &b);
+a.matrix[0][0] = 1;
+a.matrix[0][1] = 2;
+a.matrix[0][2] = 3;
+a.matrix[1][0] = 1;
+a.matrix[1][1] = 2;
+a.matrix[1][2] = 1;
+b.matrix[0][0] = 1;
+b.matrix[0][1] = 1;
+b.matrix[1][0] = 2;
+b.matrix[1][1] = 2;
+b.matrix[2][0] = 3;
+b.matrix[2][1] = 3;
+int ret = s21_transpose(&a, &c);
+ck_assert_int_eq(ret, MATRIX_OK);
+int res = s21_eq_matrix(&c, &b);
+ck_assert_int_eq(res, FAILURE);
+s21_remove_matrix(&a);
+s21_remove_matrix(&b);
+s21_remove_matrix(&c);
+
+#test test_transpose5
+matrix_t a, b, c;
+s21_create_matrix(2, 2, &a);
+s21_create_matrix(2, 2, &b);
+a.matrix[0][0] = 1;
+a.matrix[0][1] = 1;
+a.matrix[1][0] = 2;
+a.matrix[1][1] = 2;
+
+b.matrix[0][0] = 1;
+b.matrix[0][1] = 2;
+b.matrix[1][0] = 1;
+b.matrix[1][1] = 2;
+int ret = s21_transpose(&a, &c);
+ck_assert_int_eq(ret, MATRIX_OK);
+int res = s21_eq_matrix(&c, &b);
+ck_assert_int_eq(res, SUCCESS);
+s21_remove_matrix(&a);
+s21_remove_matrix(&b);
+s21_remove_matrix(&c);
+
+#test test_transpose6
+matrix_t a, b, c;
+s21_create_matrix(2, 2, &a);
+s21_create_matrix(2, 2, &b);
+a.matrix[0][0] = 1;
+a.matrix[0][1] = 1;
+a.matrix[1][0] = 2;
+a.matrix[1][1] = 2;
+
+b.matrix[0][0] = 1;
+b.matrix[0][1] = 2;
+b.matrix[1][0] = 1;
+b.matrix[1][1] = 1;
+int ret = s21_transpose(&a, &c);
+ck_assert_int_eq(ret, MATRIX_OK);
+int res = s21_eq_matrix(&c, &b);
+ck_assert_int_eq(res, FAILURE);
+s21_remove_matrix(&a);
+s21_remove_matrix(&b);
+s21_remove_matrix(&c);
+
+#test test_transpose7
+matrix_t a, b, c;
+s21_create_matrix(1, 2, &a);
+s21_create_matrix(2, 1, &b);
+a.matrix[0][0] = 10;
+a.matrix[0][1] = 11;
+
+b.matrix[0][0] = 10;
+b.matrix[1][0] = 11;
+int ret = s21_transpose(&a, &c);
+ck_assert_int_eq(ret, MATRIX_OK);
+int res = s21_eq_matrix(&c, &b);
+ck_assert_int_eq(res, SUCCESS);
+s21_remove_matrix(&a);
+s21_remove_matrix(&b);
+s21_remove_matrix(&c);
+
+#test test_transpose8
+matrix_t a, b, c;
+s21_create_matrix(1, 2, &a);
+s21_create_matrix(2, 1, &b);
+a.matrix[0][0] = 10;
+a.matrix[0][1] = 11;
+
+b.matrix[0][0] = 11;
+b.matrix[1][0] = 10;
+int ret = s21_transpose(&a, &c);
+ck_assert_int_eq(ret, MATRIX_OK);
+int res = s21_eq_matrix(&c, &b);
+ck_assert_int_eq(res, FAILURE);
+s21_remove_matrix(&a);
+s21_remove_matrix(&b);
+s21_remove_matrix(&c);

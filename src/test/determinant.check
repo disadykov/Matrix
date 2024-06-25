@@ -1,0 +1,140 @@
+#include <check.h>
+
+#include "../s21_matrix.h"
+
+#test test_determinant_number1
+matrix_t a;
+double b;
+double etalon = -11.0;
+s21_create_matrix(2, 2, &a);
+a.matrix[0][0] = 10;
+a.matrix[0][1] = 11;
+a.matrix[1][0] = 11;
+a.matrix[1][1] = 11;
+int retrn = s21_determinant(&a, &b);
+ck_assert_int_eq(retrn, MATRIX_OK);
+ck_assert_double_eq_tol(b, etalon, 1e-6);
+s21_remove_matrix(&a);
+
+#test test_determinant_number2
+matrix_t a;
+double b;
+double etalon = -11.0;
+s21_create_matrix(1, 1, &a);
+a.matrix[0][0] = -11;
+s21_determinant(&a, &b);
+int retrn = s21_determinant(&a, &b);
+ck_assert_int_eq(retrn, MATRIX_OK);
+ck_assert_double_eq_tol(b, etalon, 1e-6);
+s21_remove_matrix(&a);
+
+#test test_determinant_number3
+matrix_t a = {0};
+double b;
+s21_create_matrix(-1, 0, &a);
+int res = s21_determinant(&a, &b);
+ck_assert_int_eq(res, MATRIX_INCORRECT);
+s21_remove_matrix(&a);
+
+#test test_determinant_number4
+matrix_t a = {0};
+double b;
+s21_create_matrix(1, 2, &a);
+int res = s21_determinant(&a, &b);
+ck_assert_int_eq(res, MATRIX_CALC_ERR);
+s21_remove_matrix(&a);
+
+#test test_determinant_number5
+matrix_t a;
+double b;
+double etalon = 0;
+s21_create_matrix(3, 3, &a);
+a.matrix[0][0] = 1;
+a.matrix[0][1] = 1;
+a.matrix[0][2] = 1;
+a.matrix[1][0] = 1;
+a.matrix[1][1] = 1;
+a.matrix[1][2] = 1;
+a.matrix[2][0] = 1;
+a.matrix[2][1] = 1;
+a.matrix[2][2] = 1;
+int retrn = s21_determinant(&a, &b);
+ck_assert_int_eq(retrn, MATRIX_OK);
+ck_assert_double_eq_tol(b, etalon, 1e-6);
+s21_remove_matrix(&a);
+
+#test test_determinant_number6
+matrix_t a;
+double b;
+double etalon = 0;
+s21_create_matrix(3, 3, &a);
+a.matrix[0][0] = 1;
+a.matrix[0][1] = 2;
+a.matrix[0][2] = 3;
+a.matrix[1][0] = 4;
+a.matrix[1][1] = 5;
+a.matrix[1][2] = 6;
+a.matrix[2][0] = 7;
+a.matrix[2][1] = 8;
+a.matrix[2][2] = 9;
+int retrn = s21_determinant(&a, &b);
+ck_assert_int_eq(retrn, MATRIX_OK);
+ck_assert_double_eq_tol(b, etalon, 1e-6);
+s21_remove_matrix(&a);
+
+#test test_determinant_number7
+matrix_t a;
+double b;
+double etalon = -1985.0;
+s21_create_matrix(3, 3, &a);
+a.matrix[0][0] = 1;
+a.matrix[0][1] = 7;
+a.matrix[0][2] = 3;
+a.matrix[1][0] = 10;
+a.matrix[1][1] = 15;
+a.matrix[1][2] = -10;
+a.matrix[2][0] = 11;
+a.matrix[2][1] = 15;
+a.matrix[2][2] = 24;
+int retrn = s21_determinant(&a, &b);
+ck_assert_int_eq(retrn, MATRIX_OK);
+ck_assert_double_eq_tol(b, etalon, 1e-6);
+s21_remove_matrix(&a);
+
+#test test_determinant_number8
+matrix_t a;
+double b;
+double etalon = -11.499900;
+s21_create_matrix(3, 3, &a);
+a.matrix[0][0] = 1.5;
+a.matrix[0][1] = 2;
+a.matrix[0][2] = 3;
+a.matrix[1][0] = 4;
+a.matrix[1][1] = 5;
+a.matrix[1][2] = 1.00005;
+a.matrix[2][0] = 7;
+a.matrix[2][1] = 8;
+a.matrix[2][2] = 9;
+int retrn = s21_determinant(&a, &b);
+ck_assert_int_eq(retrn, MATRIX_OK);
+ck_assert_double_eq_tol(b, etalon, 1e-6);
+s21_remove_matrix(&a);
+
+#test test_determinant_number9
+matrix_t a;
+double b;
+double etalon = -11.499;
+s21_create_matrix(3, 3, &a);
+a.matrix[0][0] = 1.5;
+a.matrix[0][1] = 2;
+a.matrix[0][2] = 3;
+a.matrix[1][0] = 4;
+a.matrix[1][1] = 5;
+a.matrix[1][2] = 1.00005;
+a.matrix[2][0] = 7;
+a.matrix[2][1] = 8;
+a.matrix[2][2] = 9;
+int retrn = s21_determinant(&a, &b);
+ck_assert_int_eq(retrn, MATRIX_OK);
+ck_assert_double_ne_tol(b, etalon, 1e-6);
+s21_remove_matrix(&a);

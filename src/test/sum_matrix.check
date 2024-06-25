@@ -1,0 +1,233 @@
+#include <check.h>
+
+#include "../s21_matrix.h"
+
+#test test_sum_matrix1
+matrix_t a, b, c;
+int rows = 5;
+int columns = 5;
+float max = 10.234;
+float min = -3.321;
+s21_create_matrix(rows, columns, &a);
+s21_create_matrix(rows, columns, &b);
+srand(time(NULL));
+for (int i = 0; i < rows; i++) {
+  for (int j = 0; j < columns; j++) {
+    a.matrix[i][j] = (float)(rand()) / RAND_MAX * (max - min) + min;
+  }
+}
+for (int i = 0; i < rows; i++) {
+  for (int j = 0; j < columns; j++) {
+    b.matrix[i][j] = 0;
+  }
+}
+s21_sum_matrix(&a, &b, &c);
+ck_assert_int_eq(s21_eq_matrix(&a, &c), SUCCESS);
+
+s21_remove_matrix(&a);
+s21_remove_matrix(&b);
+s21_remove_matrix(&c);
+
+#test test_sum_matrix2
+matrix_t a, b, c, d;
+s21_create_matrix(3, 3, &a);
+s21_create_matrix(3, 3, &b);
+s21_create_matrix(3, 3, &d);
+a.matrix[0][0] = 1;
+a.matrix[0][1] = 2;
+a.matrix[0][2] = 3;
+a.matrix[1][0] = 0;
+a.matrix[1][1] = 4;
+a.matrix[1][2] = 5;
+a.matrix[2][0] = 0;
+a.matrix[2][1] = 0;
+a.matrix[2][2] = 6;
+b.matrix[0][0] = 1;
+b.matrix[0][1] = 0;
+b.matrix[0][2] = 0;
+b.matrix[1][0] = 2;
+b.matrix[1][1] = 0;
+b.matrix[1][2] = 0;
+b.matrix[2][0] = 3;
+b.matrix[2][1] = 4;
+b.matrix[2][2] = 1;
+d.matrix[0][0] = 2;
+d.matrix[0][1] = 2;
+d.matrix[0][2] = 3;
+d.matrix[1][0] = 2;
+d.matrix[1][1] = 4;
+d.matrix[1][2] = 5;
+d.matrix[2][0] = 3;
+d.matrix[2][1] = 4;
+d.matrix[2][2] = 7;
+s21_sum_matrix(&a, &b, &c);
+int res = s21_eq_matrix(&c, &d);
+ck_assert_int_eq(res, SUCCESS);
+s21_remove_matrix(&c);
+s21_remove_matrix(&a);
+s21_remove_matrix(&b);
+s21_remove_matrix(&d);
+
+#test test_sum_matrix3
+matrix_t a, b, c, d;
+s21_create_matrix(3, 3, &a);
+s21_create_matrix(3, 3, &b);
+s21_create_matrix(3, 3, &d);
+a.matrix[0][0] = 1;
+a.matrix[0][1] = 2;
+a.matrix[0][2] = 3;
+a.matrix[1][0] = 1;
+a.matrix[1][1] = 2;
+a.matrix[1][2] = 3;
+a.matrix[2][0] = 1;
+a.matrix[2][1] = 2;
+a.matrix[2][2] = 3;
+b.matrix[0][0] = 3;
+b.matrix[0][1] = 2;
+b.matrix[0][2] = 1;
+b.matrix[1][0] = 3;
+b.matrix[1][1] = 2;
+b.matrix[1][2] = 1;
+b.matrix[2][0] = 3;
+b.matrix[2][1] = 2;
+b.matrix[2][2] = 1;
+d.matrix[0][0] = 4;
+d.matrix[0][1] = 4;
+d.matrix[0][2] = 4;
+d.matrix[1][0] = 4;
+d.matrix[1][1] = 4;
+d.matrix[1][2] = 4;
+d.matrix[2][0] = 4;
+d.matrix[2][1] = 4;
+d.matrix[2][2] = 4;
+s21_sum_matrix(&a, &b, &c);
+int res = s21_eq_matrix(&c, &d);
+ck_assert_int_eq(res, SUCCESS);
+s21_remove_matrix(&c);
+s21_remove_matrix(&a);
+s21_remove_matrix(&b);
+s21_remove_matrix(&d);
+
+#test test_sum_matrix4
+matrix_t a, b, c, d;
+s21_create_matrix(3, 3, &a);
+s21_create_matrix(3, 3, &b);
+s21_create_matrix(3, 3, &d);
+a.matrix[0][0] = 1;
+a.matrix[0][1] = 2;
+a.matrix[0][2] = 3;
+a.matrix[1][0] = 1;
+a.matrix[1][1] = 2;
+a.matrix[1][2] = 3;
+a.matrix[2][0] = 1;
+a.matrix[2][1] = 2;
+a.matrix[2][2] = 3;
+b.matrix[0][0] = 3;
+b.matrix[0][1] = 2;
+b.matrix[0][2] = 1;
+b.matrix[1][0] = 3;
+b.matrix[1][1] = 2;
+b.matrix[1][2] = 1;
+b.matrix[2][0] = 3;
+b.matrix[2][1] = 2;
+b.matrix[2][2] = 1;
+d.matrix[0][0] = 4;
+d.matrix[0][1] = 4;
+d.matrix[0][2] = 4;
+d.matrix[1][0] = 4;
+d.matrix[1][1] = 4;
+d.matrix[1][2] = 4;
+d.matrix[2][0] = 4;
+d.matrix[2][1] = 4;
+d.matrix[2][2] = 5;
+s21_sum_matrix(&a, &b, &c);
+int res = s21_eq_matrix(&c, &d);
+ck_assert_int_eq(res, FAILURE);
+s21_remove_matrix(&c);
+s21_remove_matrix(&a);
+s21_remove_matrix(&b);
+s21_remove_matrix(&d);
+
+#test test_sum_matrix5
+matrix_t a = {0};
+matrix_t b = {0};
+matrix_t c = {0};
+s21_create_matrix(-1, 0, &a);
+s21_create_matrix(3, 3, &b);
+int res = s21_sum_matrix(&a, &b, &c);
+ck_assert_int_eq(res, MATRIX_INCORRECT);
+s21_remove_matrix(&a);
+s21_remove_matrix(&b);
+s21_remove_matrix(&c);
+
+#test test_sum_matrix6
+matrix_t a = {0};
+matrix_t b = {0};
+matrix_t c = {0};
+s21_create_matrix(2, 3, &a);
+s21_create_matrix(3, 3, &b);
+int res = s21_sum_matrix(&a, &b, &c);
+ck_assert_int_eq(res, MATRIX_INCORRECT);
+s21_remove_matrix(&a);
+s21_remove_matrix(&b);
+s21_remove_matrix(&c);
+
+#test test_sum_matrix7
+matrix_t a, b, c, d;
+s21_create_matrix(4, 4, &a);
+s21_create_matrix(4, 4, &b);
+s21_create_matrix(4, 4, &d);
+for (int i = 0; i < 4; i++) {
+  for (int j = 0; j < 4; j++) {
+    a.matrix[i][j] = i + j;
+    d.matrix[i][j] = i + j;
+  }
+}
+int res = s21_sum_matrix(&a, &b, &c);
+ck_assert_int_eq(res, MATRIX_OK);
+res = s21_eq_matrix(&c, &d);
+ck_assert_int_eq(res, SUCCESS);
+s21_remove_matrix(&a);
+s21_remove_matrix(&b);
+s21_remove_matrix(&c);
+s21_remove_matrix(&d);
+
+#test test_sum_matrix8
+matrix_t a, b, c, d;
+s21_create_matrix(3, 3, &a);
+s21_create_matrix(3, 3, &b);
+s21_create_matrix(3, 3, &d);
+a.matrix[0][0] = 4.48344517;
+a.matrix[0][1] = 5.82719088;
+a.matrix[0][2] = 8.06609726;
+a.matrix[1][0] = 4.24502325;
+a.matrix[1][1] = 7.07111502;
+a.matrix[1][2] = -0.04907751;
+a.matrix[2][0] = 3.61930656;
+a.matrix[2][1] = 6.60953093;
+a.matrix[2][2] = 4.17005444;
+b.matrix[0][0] = 2.06632400;
+b.matrix[0][1] = 2.78097868;
+b.matrix[0][2] = 3.97171259;
+b.matrix[1][0] = 1.93952227;
+b.matrix[1][1] = 3.44254351;
+b.matrix[1][2] = -0.34424138;
+b.matrix[2][0] = 1.60674262;
+b.matrix[2][1] = 3.19705629;
+b.matrix[2][2] = 1.89965129;
+d.matrix[0][0] = 6.54976916;
+d.matrix[0][1] = 8.60816956;
+d.matrix[0][2] = 12.03780985;
+d.matrix[1][0] = 6.18454552;
+d.matrix[1][1] = 10.51365852;
+d.matrix[1][2] = -0.39331889;
+d.matrix[2][0] = 5.22604918;
+d.matrix[2][1] = 9.80658722;
+d.matrix[2][2] = 6.06970572;
+s21_sum_matrix(&a, &b, &c);
+int res = s21_eq_matrix(&c, &d);
+ck_assert_int_eq(res, SUCCESS);
+s21_remove_matrix(&c);
+s21_remove_matrix(&a);
+s21_remove_matrix(&b);
+s21_remove_matrix(&d);
