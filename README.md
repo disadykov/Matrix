@@ -192,6 +192,8 @@ int s21_inverse_matrix(matrix_t *A, matrix_t *result);
 
 ## Компиляция и запуск
 
+Библиотека разрабатывались и тестировались в ОС **`Ubuntu desktop 22.04`**
+
 - `cd src`
 - `make check` - проверка стилей и cppcheck
 - `make s21_matrix.a` - сборка библиотеки
@@ -201,6 +203,9 @@ int s21_inverse_matrix(matrix_t *A, matrix_t *result);
 - `make gcov_report` - собрать тесты для веб интерфейса
 - запустить файл `/src/report/index.html`
 
+- ![matrix](img/matrix.png)
+
+- ![gcov](img/gcov.png)
 
 
 
